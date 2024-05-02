@@ -1,0 +1,100 @@
+---
+title: "Homicidios cometidos en Costa Rica en el año 2023"
+author: "Kris Morales"
+format: html
+editor: visual
+---
+
+# Presentación
+
+Este documento contiene un conjunto de gráficos sobre homicidios cometidos en el año 2023.
+
+# Lectura de datos
+
+```{r}
+#| label: Lectura-datos
+
+#Lectura de archvio de datos
+delitos_2023 <- read.csv(file = "estadisticaspoliciales2023.csv")
+
+```
+
+# Filtrado de homicidios
+
+```{r}
+#| Label: filtrado-homicidios
+
+homicidios2023 <-
+  delitos_2023[delitos_2023 == "HOMICIDIO", ]
+
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+# Homicidios por provincia
+
+```{r}
+#|label: homicidios_x_provincia
+
+# Conteo de homicidios por provincia
+homicidios_x_provincia <- table(homicidios2023$Provincia)
+
+# Ordenamiento por cantinades de homicidios
+homicidios_x_provincia <- sort(homicidios_x_provincia, decreasing = TRUE)
+
+# Gráfico de barras
+
+barplot(
+  height = homicidios_x_provincia,
+  las = 2,
+  col = "black",
+  cex.names = 0.7,
+  main = "Homciidios por provincia"
+)
+```
+
+# Homicidios por cantón
+
+```{r}
+#| label: homicidios_x_cantón
+
+# Conteo de homicidios por cantón
+homicidios_x_canton <- table(homicidios2023$Canton)
+
+# Ordenamiento por cantidad de homicidios
+homicidios_x_canton <- sort(homicidios_x_canton, decreasing = TRUE)
+
+# Selección de los 20 cantones con más homicidios
+homicidios_x_canton <- head(homicidios_x_canton, 20)
+
+# Gráficos de barras
+barplot(
+  height = homicidios_x_canton,
+  las = 2,
+  col = "black",
+  cex.names = 0.7,
+  main = "Homciidios por cantón"
+)
+```
+
+# Homicidios por género
+
+```{r}
+#| label: homicidios_x_genero
+
+# Conteo de homicidios por género
+homicidios_x_genero <- table(homicidios2023$Genero)
+
+# Ordenamiento por cantidad de homicidios
+homicidios_x_genero <- sort(homicidios_x_genero, decreasing = TRUE)
+
+# Gráficos de barras
+barplot(
+  height = homicidios_x_genero,
+  las = 2,
+  col = c("#23BAC4","#E69DFB","#FF689D"),
+  cex.names = 0.7,
+  main = "Homicidios por género"
+)
+```
+
